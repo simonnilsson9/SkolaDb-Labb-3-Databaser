@@ -125,50 +125,25 @@ namespace SkolaDb_Labb_3
             Console.WriteLine("Välj en av klasserna du vill se alla elever i");
             string selectedClass = Console.ReadLine();
 
-            var studentsInSelectedClass = context.TblStudents.Where(s => s.Klass == selectedClass);
+            bool classIsValid = context.TblStudents.Any(s => s.Klass == selectedClass);
 
-            switch (selectedClass.ToUpper())
+            if (!classIsValid)
             {
-                case "SUT23":
-                    Console.Clear();
-                    Console.WriteLine($"Eleverna i klassen {selectedClass.ToUpper()}\n");
-                    foreach (TblStudent s in studentsInSelectedClass)
-                    {
-                        Console.WriteLine($"{s.Förnamn} {s.Efternamn}\nStudentID: {s.StudentId}\n");
-                    }
-                    break;
+                Console.WriteLine($"\nKlassen {selectedClass} finns inte.");
+            }
+            else
+            {
+                Console.Clear();
+                Console.WriteLine($"Eleverna i klassen {selectedClass.ToUpper()}\n");
 
-                case "SUT21":
-                    Console.Clear();
-                    Console.WriteLine($"Eleverna i klassen {selectedClass.ToUpper()}\n");
-                    foreach (TblStudent s in studentsInSelectedClass)
-                    {
-                        Console.WriteLine($"{s.Förnamn} {s.Efternamn}\nStudentID: {s.StudentId}\n");
-                    }
-                    break;
+                var studentsInSelectedClass = context.TblStudents.Where(s=> s.Klass == selectedClass);
 
-                case "EKB19":
-                    Console.Clear();
-                    Console.WriteLine($"Eleverna i klassen {selectedClass.ToUpper()}\n");
-                    foreach (TblStudent s in studentsInSelectedClass)
-                    {
-                        Console.WriteLine($"{s.Förnamn} {s.Efternamn}\nStudentID: {s.StudentId}\n");
-                    }
-                    break;
 
-                case "MEK21":
-                    Console.Clear();
-                    Console.WriteLine($"Eleverna i klassen {selectedClass.ToUpper()}\n");
-                    foreach (TblStudent s in studentsInSelectedClass)
-                    {
-                        Console.WriteLine($"{s.Förnamn} {s.Efternamn}\nStudentID: {s.StudentId}\n");
-                    }
-                    break;
-
-                default:                    
-                    Console.WriteLine("\nOgiltigt klassval.");
-                    break;
-
+                foreach (TblStudent s in studentsInSelectedClass)
+                {
+                    Console.WriteLine($"{s.Förnamn} {s.Efternamn}\nStudentID: {s.StudentId}\n");
+                }
+                
             }
             Console.WriteLine("Tryck ENTER för att försätta.");
             Console.ReadKey();
